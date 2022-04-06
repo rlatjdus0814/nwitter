@@ -1,7 +1,7 @@
 # 김서연
 
 [4월 6일]
-## 1. useState 힘수 사용
+## 1. useState 함수 사용
 ``` java 
 const [isLoggedIn, setIsLoggedIn] = useState(faluse); 
 ```
@@ -31,6 +31,7 @@ import AppRouter from "components/Router";
 - 상대경로는 가독성이 좋지 않음
 - 깔끔한 경로를 사용하기 위해 './jsconfig.json' 파일 생성
 - 코드 작성 후 절대 경로로 작성하여 사용 가능 (서버 재시작)
+
 
 
 [3월 30일]
