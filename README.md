@@ -1,5 +1,38 @@
 # 김서연
 
+[4월 6일]
+## 1. useState 힘수 사용
+``` java 
+const [isLoggedIn, setIsLoggedIn] = useState(faluse); 
+```
+- 'isLoggedIn'은 단순 변수가 아닌, 관리하는 상태로 취급함
+- 'setIsLoggedIn'은  변수가 아닌, 'isLoggedIn'을 변경할 때 사용하는 함수
+
+``` java
+ return (
+    <>
+      <AppRouter isLoggedIn={isLoggedIn} />
+      <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
+    </>
+  );
+```
+- AppRouter 컴포넌트에 isLoggedIn 이름의 props 전달
+
+``` java
+const AppRouter = ({isLoggedIn}) => {}
+```
+- AppRouter에서 state 값을 받아 가져옴
+
+## 2. 절대 경로 적용하기
+``` java
+import AppRouter from "components/Router";
+```
+- 현재 import문을 사용하여 상대 경로 사용
+- 상대경로는 가독성이 좋지 않음
+- 깔끔한 경로를 사용하기 위해 './jsconfig.json' 파일 생성
+- 코드 작성 후 절대 경로로 작성하여 사용 가능 (서버 재시작)
+
+
 [3월 30일]
 ## 1. 파이어베이스 생성
 - 구글 Firebase  아이디 생성 후 새 프로젝트 클릭 > nwitter 생성
