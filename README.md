@@ -1,6 +1,22 @@
 # 김서연
 
-[4월 6일]
+## [4월 13일]
+-----
+### 1. 파이어베이스 서비스
+ - 필요한 서비스를 각각 import 시켜야 사용 가능함
+
+### 2. 파이어베이스 로그인 설정
+ - Authentication > Sign-in method > 이메일/비밀번호, 구글에서 설정 후 저장
+ - 이메일/비밀번호, 구글에서 데이터를 지원해줌
+ - 깃허브 : 승인 콜백 복사 > 마이페이지 > Setting > Developer Settings > OAuth Apps > 'Authorization callback URL에 붙여넣기
+
+ ### 3. JSX문법
+  - 컴포넌트에 여러 요소가 있으면 부모 요소 하나로 감싸야 함
+  
+
+
+
+## [4월 6일]
 ## 1. useState 함수 사용
 ``` java 
 const [isLoggedIn, setIsLoggedIn] = useState(faluse); 
@@ -34,7 +50,7 @@ import AppRouter from "components/Router";
 
 
 
-[3월 30일]
+## [3월 30일]
 ## 1. 파이어베이스 생성
 - 구글 Firebase  아이디 생성 후 새 프로젝트 클릭 > nwitter 생성
 - Firebase SDK 코드 복사 후 firebase.js 파일 생성
@@ -72,7 +88,7 @@ import AppRouter from "components/Router";
 - useState 함수의 인자로 [상태, 상태 관리 함수 이름]의 배열을 입력받음
 
 
-[3월 23일]
+## [3월 23일]
 ## 1. Git 최초 설정 (사용자 이름, 이메일 설정)
 
 ### 1) 로컬 pc에서 push하기

@@ -3,8 +3,7 @@ import AppRouter from "./Router";
 import { authService } from "../fbase";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(authService.currentUser);
+  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
 
   return (
     <>
