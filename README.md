@@ -2,18 +2,49 @@
 
 ## [4월 13일]
 -----
-### 1. 파이어베이스 서비스
+## 1. 파이어베이스 서비스
  - 필요한 서비스를 각각 import 시켜야 사용 가능함
 
-### 2. 파이어베이스 로그인 설정
+## 2. 파이어베이스 로그인 설정
  - Authentication > Sign-in method > 이메일/비밀번호, 구글에서 설정 후 저장
  - 이메일/비밀번호, 구글에서 데이터를 지원해줌
  - 깃허브 : 승인 콜백 복사 > 마이페이지 > Setting > Developer Settings > OAuth Apps > 'Authorization callback URL에 붙여넣기
 
- ### 3. JSX문법
+## 3. JSX문법
   - 컴포넌트에 여러 요소가 있으면 부모 요소 하나로 감싸야 함
-  
 
+## 4. Auth 함수
+ - class에서는 {key : value}였다면, 컴포넌트에서는 [key, function] 로 구성됨
+ ``` java
+  const [email, setEmail] = useState("");
+  const [passowrd, setPassword] = useState("");
+ ```
+ - onChange 함수를 통해 input 엘리먼트의 name속성에 지정한 값을 출력함
+ - onChange 함수에서 'event.target.name'으로 input 엘리먼트에서 입력한 값을 알 수 있음
+ ``` java
+  const onChange = (event) => {
+    console.log(event.target.name)
+  }
+
+  ...
+
+  <input name="email" type="email" placeholder="Email" required value="email" onChange={onChange} />
+ ```
+
+ ## 5. event.preventDefault();
+  - submit 이벤트로 새로고침을 하는 문제 발생
+  - onSubmit 함수에서 이벤트의 기본값과 새로고침 현상을 막기 위해 사용
+  ``` java
+    const onSubmit = (event) => {
+      event.preventDefault();
+    }
+  ```
+## 6. 삼항 연산자
+  - { 조건 ? '참' : '거짓' }으로 이우어져있음
+  - 새로운 account 면 'Create Account', 이미 정보가 있으면 'Log In'
+  ``` java
+  { newAccount ? 'Create Account' : 'Log In' }
+  ```
 
 
 ## [4월 6일]
