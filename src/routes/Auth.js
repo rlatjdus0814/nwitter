@@ -1,9 +1,11 @@
+import { authService } from '../fbase';
 import React, { useState } from 'react';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
-  const [passowrd, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
+  const [error, setError] = useState("");
 
   const onChange = (event) => {
     const {target: {name, value},} = event;
@@ -12,26 +14,44 @@ const Auth = () => {
     else if (name === 'password') setPassword(value);
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async(event) => {
     event.preventDefault();
-    if (newAccount) {
-      // create newAccount
+    try {
+      let data;
+      if (newAccount) {
+        data = await authService.createUserWithEmailAndPassword(email, password);
+      }
+      else { 
+        data = await authService.signInWithEmailAndPassword(email,password); 
+      }
+      console.log(data);
+    } catch (error) {
+      setError(error.message);
     }
-    else { 
-      //log in 
-    }
+  }
+
+  const toggleAccount = () => {
+    setNewAccount((prev) => !prev);
+  }
+
+  const onSocialClick = (event) => {
+    console.log(event.target.name);
   }
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input name="email" type="email" placeholder="Email" required value="email" onChange={onChange} />
-        <input name="password"  type="password" placeholder="Paasword" required value="password" onChange={onChange} />
-        <input type="submit" value="{newAccount ? 'Create Account' : 'Log In' " />
+        <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange} />
+        <input name="password"  type="password" placeholder="Password" required value={password} onChange={onChange} />
+        <input type="submit" value={newAccount ? 'Create Account' : 'Log In' } />
+        {error}
       </form>
+      <span onClick={toggleAccount}>
+        {newAccount ? "Sign in" : "Create Account"}
+      </span>
       <div>
-        <button>Contiune with Google</button>
-        <button>Contiune with Github</button>
+        <button onClick={onSocialClick} name="google">Contiune with Google</button>
+        <button onClick={onSocialClick} name="github">Contiune with Github</button>
       </div>
     </div>
   )

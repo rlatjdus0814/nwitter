@@ -1,5 +1,77 @@
 # 김서연
 
+## [4월 27일]
+
+### 1. async await
+- 비동기 처리 방식
+- 코드가 간결해지고, 가독성 높아짐
+- try {} catch {} 로 에러 확인 가능
+```java
+  const onSubmit = async(event) => { // async
+    event.preventDefault();
+    try {
+      let data;
+      if (newAccount) {
+        data = await authService.createUserWithEmailAndPassword(email, password); //await 
+      }
+      else { 
+        data = await authService.signInWithEmailAndPassword(email,password); 
+      }
+      console.log(data);
+    } catch (error) { // try/catch로 에러 확인
+      console.log(error);
+    }
+  }
+```
+
+### 2. setPersistence
+- 로그인 상태를 지속시키는 함수
+- 상태 지속을 3가지로 나눠서 관리 
+> 1) local : 웹 브라우저를 종료해도 로그인 유지
+    - 웹 브라우저를 종료해도 사용자의 정보를 기억하는 옵션
+> 2) session : 웹 브라우저의 탭 종료 시 로그아웃
+    - 기본적으로 많이 사용함
+> 3) none : 새로고침하면 로그아웃 
+
+### 3. 로그인, 로그아웃
+#### 1) 로그인 후 currentUser 가 null 인 이유
+- 파이어베이스에서 로그인 처리를 마치고 누이터에서 신호를 받기까지 시간이 생기는데
+그 사이에 누이터가 값을 확인하면 null이 출력됨
+
+#### 2) 딜레이 시간 확인
+- 로그인 처리 완료까지 걸리는 시간 확인
+```java
+  setInterval(() => console.log(authService.currentUser), 2000)
+```
+
+### 4. useEffect() 함수
+- 특정한 시점에 실행되는 함수
+- 파이어베이스가 초기화되는 시점에 실행됨
+- 두번째 인자에 중괄호({})를 작성해야 초기에 한 번만 실행됨
+```java
+  useEffect (() => {
+    authService.onAuthStateChanged((user) => console.log(user))
+  },[]);
+```
+### 5. 로그인, 회원가입 토글 버튼
+- 로그인 여부에 따라 로그인, 회원가입이 전환되는 버튼
+- 삼항연산자를 이용하여 로그인 여부 판단
+```java
+  const toggleAccount = () => setNewAccount((prev) => !prev);
+
+  ...
+
+  <span onClick={toggleAccount}>
+    {newAccount ? "Sign in" : "Create Account"}
+  </span>
+```
+
+### 6. 소셜 로그인
+#### 1) firebaseInstance 추가
+- 소셜 로그인에 필요한 provider가 없어서 firebase 전체 import하기
+- firebaseInstance 이름으로 importgkrl
+
+
 ## [4월 13일]
 
 ### 1. 파이어베이스 서비스
