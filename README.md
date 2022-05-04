@@ -1,5 +1,81 @@
 # 김서연
 
+## [5월 4일]
+
+### 1. 소셜 로그인
+#### 1) Provider
+- 소셜 로그인 서비스 제공 업체로 비유
+```java
+  if(name === 'google') {
+    // 구글 소셜 로그인 서비스 제공
+    provider = new firebaseInstance.auth.GoogleAuthProvider();
+  } else if (name === 'github') {
+    // 깃허브 소셜 로그인 서비스 제공
+    provider = new firebaseInstance.auth.GithubAuthProvider();
+  }
+```
+
+#### 2) 소셜 로그인 완성
+- signInWithPopup() : 실제 소셜 로그인 진행하는 비동기 함수
+- provider를 함수 인자로 넘겨 소셜 로그인 시도
+- 실행 후 팝업창에서 로그인 기능 생성 확인 가능
+
+### 2. Navigation 컴포넌트
+- 네이게이션 컴포넌트로 라우터 제어
+- 컴포넌트 생성 후 Router.js 파일에 연동
+#### 1) Switch
+- Switch를 이용해 isLoggedIn이 true인 경우에만 Navigation이 보이도록 출력
+```java
+  {isLoggedIn && <Navigation />}
+```
+#### 2) 링크 추가
+- Home 컴포넌트와 Profile 컴포넌트를 링크(<Link>)를 통해 이동 가능 
+- 링크만 수정되고 실제로 컴포넌트 렌더링하지 않음
+- 컴포넌트는 대문자(Profile), path에는 소문자(profile)로 구성되어 있으니 확인!
+```java
+  import {Link} from "react-router-dom";
+  ...
+
+  <li>
+    <Link to="/">Home</Link>
+  </li>
+  <li>
+    <Link to="/profile">My Profile</Link>
+  </li> 
+```
+
+### 3. 로그아웃
+- Profile.js 파일에서 로그아웃 버튼 생성
+- authServise의 함수 중 SignOut 함수 실행 > 로그아웃
+- 로그아웃 > IndexedDB에 있는 정보를 알아서 비우고 로그아웃 처리 > 주소 표시줄은 여전히 /profile
+
+#### 1) Redirect로 로그아웃 후 주소 이동
+- Switch 내부에 있는 Route 조건이 불충분 > Redirect가 지정한 주소로 이동
+- 'from' props에 있는 값 > 조건
+- 'to' props에 있는 값으로 주소 이동 
+```java
+  import { Redirect } from "react-router-dom";
+  ...
+  // 어떤 주소든(from) /루트로 변경(to)
+  <Redirect from="*" to="/" />
+```
+- 로그아웃 버튼 클릭 후 > 주소는 여젼히(/profile) > Redirect 동작
+
+#### 2) useHistoy로 로그아웃 후 주소 이동
+- 로그아웃을 처리하는 자바스크립트 코드로 주소 이동
+- 
+```java
+  import { useHistory } from 'react-router-dom';
+  ...
+  const histoy = useHistory();
+  const onLogOutClick = () => {
+    authService.signOut();
+    histoy.push("/");
+  };
+```
+
+
+
 ## [4월 27일]
 
 ### 1. async await
@@ -69,7 +145,7 @@
 ### 6. 소셜 로그인
 #### 1) firebaseInstance 추가
 - 소셜 로그인에 필요한 provider가 없어서 firebase 전체 import하기
-- firebaseInstance 이름으로 importgkrl
+- firebaseInstance 이름으로 import하기
 
 
 ## [4월 13일]
@@ -206,5 +282,3 @@ import AppRouter from "components/Router";
 - git add . : 변경된 파일 등록
 - git commit -m "message" : 등록된 파일에 메세지 첨부
 - git push origin master : 저장소로 파일, 메세지 업로드
-
-
