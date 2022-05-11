@@ -1,5 +1,52 @@
 # 김서연
 
+## [5월 11일]
+
+### 1. 파이어스토어 문서 읽어오기 : Read
+- 파이어스토어의 nweets 컬렉션과 문서 읽어오기
+- 문서의 경우 get() 함수 사용
+- 모든 컴포넌트가 마운트가 된 후 문서들을 가져오기 : useEffect
+#### 1) useEffect
+- async-await문을 쓰는 함수가 useEffect에 포함되어 있을 때 별도의 함수로 생성하여 실행
+```java
+  const getNweets = async () => {
+    const dbNweets = await dbService.collection("nweets").get();
+    console.log(dbNweets);
+  };
+
+  useEffect(() => { // 별도의 함수 생성
+    getNweets();
+  }, []);
+```
+
+#### 2) 스냄샷
+- 파이어스토어의 원본을 사진 찍듯이 보내준 데이터
+- 데이터를 얻기위해 forEach() 함수 사용
+- document = 문서
+- 문서의 수만큼 스냅샷으로 읽음
+```java
+  dbNweets.forEach((document) => console.log(document.data()));
+```
+
+### 2. 게시물 목록
+- 파이어스토어에서 받은 데이터는 상태(state)로 관리 > 화면에 노출 가능
+- 초기화 상태(state) : nweets
+- 데이터 저장 함수 : forEach(), setNweets
+> (potato) => [document.data(), ...potato])
+> - potato에 순회 이전의 상태(state)가 넘어옴
+> - potato를 전개 구문으로 다시 풀어서 새 데이터와 배열로 저장
+```java
+  const [nweets, setNweets] = useState([]);
+
+  dbNweets.forEach((document) => {
+    setNweets((prev) => [document.data(), ...prev]) //전개 구문
+  });
+
+  console.log(nweets);
+```
+
+
+
 ## [5월 4일]
 
 ### 1. 소셜 로그인
