@@ -1,5 +1,74 @@
 # 김서연
 
+## [5월 18일]
+### 1. 사용자 정보 전달
+- 로그인한 사람의 정보를 사용하기 위해 Home, Profile, EditProfile 컴포넌트에서 필요
+- 중간 역할인 AppRouter 컴포넌트로 userObj 전달
+```java
+  const [userObj, setUserObj] = useState(null);
+  ...
+
+  setUserObj(user);
+```
+- Home 컴포넌트에서 트윗을 파이어스토어에 저장하는 로직에 userObj.id도 저장하는 로직 추가 -> 트윗 작성자 구분 가능
+
+### 2. 리액트 사용 시 주의
+- 리액트에서 props는 여러 개의 컴포넌트를 거치지 않고 최소한으로 전달하기 -> 유지 보수에 좋지 않음
+- 변수 이름 한 번에 알 수 있도록 직관적이게 작성 -> 추후에 많이지면 헷갈리지 않게 어울리는 이름으로 작성
+
+### 3. 실시간 트윗 목록 보여주기
+- 실시간 데이터베이스를 이용해 실시간 트윗 목록 출력
+- 실시간 데이터베이스 : 데이터베이스의 변화 감지 및 파이어베이스 라이브러리 함수 실행
+- async-await문 사용하지 않아도 통신 가능
+#### 1) onSnapshot 함수
+- onSnapshot() 함수로 실시간 데이터베이스 도입 완료
+- snapshot.docs.map : 문서 스냅샷에서 원하는 값 추출 가능
+- map 함수 : 순회하면서 배열을 반환하고 반환한 배열을 setNweets 함수에 전달하기 때문에 코드 효율 증가
+```java
+  dbService.collection("nweets").onSnapshot((snapshot) => {
+    const newArray = snapshot.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    }));
+    setNweets(newArray);
+  });
+```
+
+### 4. 트윗 삭제 기능
+- 개별 트윗 출력 부분 컴포넌트로 분리
+
+#### 1) createId와 현재 로그인한 사람의 uid 비교 후 동일한 경우에만 삭제/수정버튼 노출
+```java
+// Home.js
+  <Nweet key={nweet.id} nweetObj={nweet} isOwner={nweet.creatorId === userObj.uid} />
+```
+- isOwner가 true 일 때만 버튼 노출
+```java
+// Nweet.js
+  {isOwner && (
+    <>
+      <button>Delete Nweet</button>
+      <button>Edit Nweet</button>
+    </>
+  )}
+```
+
+#### 2) 버튼에 삭제 기능 추가
+- nweetObj에 있는 문서 아이디를 이용해 트윗 삭제
+- 버튼 클릭 후 '삭제하시겠습니까?'와 같은 확인 메뉴 추가
+- window.confirm : '확인' 클릭 시 true, '취소' 클릭 시 false 반환
+```java
+  const onDeleteClick = () => {
+    const ok = window.confirm("삭제하시겠습니까?");
+    console.log(ok);
+  }
+```
+- 백틱을 사용하여 변수를 편리하게 작성
+- `문자$value$입니다` == "문자" + value + "입니다"
+```java
+  const data = await dbService.doc(`nweets/${nweetObj.id}`).delete();
+```
+
 ## [5월 11일]
 
 ### 1. 파이어스토어 문서 읽어오기 : Read
