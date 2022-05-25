@@ -1,5 +1,50 @@
 # 김서연
 
+## [5월 25일]
+### 1. 트윗 수정 기능
+#### 1) onChange 함수
+- 입력할 때마다 value 인자로 키보드 값이 넘어감
+- newNweet에 반영하기 때문에 입력한 텍스트가 바로 보임
+```java
+  <input onChange={onChange} value={newNweet} required />
+```
+
+#### 2) 파이어스토어에 입력값 반영
+- 새 입력값을 반영하기 위해 form 엘리먼터 & onSubmit 함수 필요
+- 문서 자체를 수정하기 때문에 'doc(...).update(...)'로 작성
+- 업데이트를 하고 싶은 값을 {text:newNweet}와 같은 객체 형태로 전달해야 업데이트가 제대로 실행됨
+
+### 2. 사진 미리보기 기능
+#### 1) 파일 첨부 양식
+- 파일 업로드를 위해 'type="file"' 속성을 가진 input 엘리먼트 추가
+- 퍼일 이벤트의 경우 event.target.value를 사용하면 파일 경로가 출력이 되지만 보안 정책 상 실제 경로를 표시하면 안되기 때문에 상세 경로가 숨겨진 상태로 출력됨
+- event.target.files와 같이 files 배열 참고
+```java
+  const onFileChange = (event) => {
+    const { target: {files}, } =event;
+    const thdFile = files[0];
+  };
+```
+- files가 배열인 이유는 input 엘리먼트의 multiple 속성에 대비하기 위함
+- 여러 개의 이미지 파일 업로드 시 배열로 파일 정보를 보여주기 위해서
+
+#### 2) 웹 브라우저에 사진 출력
+- 브라우저 API인 FileReader 사용
+- new FileReader()와 같이 new 키워드와 함께 사용
+- onloadend : readAsDataURL 함수에 전달한 파일이 함수로 들어간 이후의 결과값이 나온 다음 상황 감지
+```java
+  const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      console.log(finishedEvent);
+    }
+    reader.readAsDataURL(theFile);
+```
+
+#### 3. 사진 미리보기 기능
+- URL을 이용하여 파이어베이스에 사진을 저장하기 전 확인하는 기능
+- URL 관리를 위한 상태 필요
+
+
 ## [5월 18일]
 ### 1. 사용자 정보 전달
 - 로그인한 사람의 정보를 사용하기 위해 Home, Profile, EditProfile 컴포넌트에서 필요
