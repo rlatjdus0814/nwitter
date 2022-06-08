@@ -1,5 +1,45 @@
 # 김서연
 
+## [6월 8일]
+### 1. 사진 저장 기능
+#### 1) 파이어스토어 스토리지 
+- 사진, 동영상 파일처럼 큰 파일을 저장했다가 필요할 때 사용 가능
+- 서비스를 임포느할 때 관련 서비스를 따로 임포트 후 리액트 서버 재구동
+- 파이어스토어와 다르게 문서에 아이디를 자동으로 만들지 않음
+- 고유의 식별자를 만들어 스토리지에 저장해야 함
+
+#### 2) UUID 라이브러리
+- 고유 식별자를 만들어주는 라이브러리
+
+#### 3) 스토리지에서 사진 불러오기
+- response.ref.getDownloadURL() 함수 사용
+- 트윗 업로드 코드를 스토리지에서 사진을 저장하는 코드보다 뒤쪽에 작성하기 
+- if문 안에서 attachmentUrl을 정의하면 안됨
+```java
+  let attachmentUrl = "";
+  if (attachment !== "") {
+    const attachmentRef = storageService
+      .ref()
+      .child(`${userObj.uid}/${uuid4()}`);
+    const response = await attachmentRef.putString(attachment, "data_url");
+    attachmentUrl = await response.ref.getDownloadURL();
+  }
+  await dbService.collection("nweets").add({
+    text: nweet,
+    createdAt: Date.now(),
+    creatorId: userObj.uid,
+    attachmentUrl,
+  });
+```
+
+### 2. 트윗 삭제 시 스토리지에서 사진 삭제
+- refFromURL() 함수를 사용해 attachmentUrl만으로 스토리지에서 해당 파일의 위치를 바로 찾아 삭제 가능
+```java
+  await storageService.refFromURL(nweetObj.attchmentUrl).delete();
+```
+
+
+
 ## [5월 25일]
 ### 1. 트윗 수정 기능
 #### 1) onChange 함수
