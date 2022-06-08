@@ -38,6 +38,17 @@
   await storageService.refFromURL(nweetObj.attchmentUrl).delete();
 ```
 
+### 3. 필터링한 트윗 목록 출력
+- 파이어베이스에서 제공하는 함수 중 파이어베이스가 받아들일 준비가 되어 있지 않으면 사용할 수 없는 함수가 있음
+- 색인 작업이 되어 있어야 orderBy 함수 사용 가능
+```java
+    const nweets = await dbService
+      .collection("nweets")
+      .where("createId", "==", userObj.uid)
+      .orderBy("createAt", "asc")
+      .get();
+    console.log(nweets.docs.map((doc) => doc.data()));
+```
 
 
 ## [5월 25일]

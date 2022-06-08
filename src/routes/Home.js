@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { dbService, storageService } from '../fbase';
-import Nweet from '../components/Nweet';
+import Nweet from '../components/Nweets';
 import { v4 as uuidv4 } from "uuid";
 
 const Home = ({userObj}) => {
@@ -76,7 +76,7 @@ const Home = ({userObj}) => {
         <input type="submit" value="Nweet" />
         {attachment && (
           <div>
-            <img src={attachment} width="50px" height="50px" />
+            <img src={attachment} width="50px" height="50px" alt="home" />
             <button onClick={onClearAttachment}>Clear</button>
           </div>
         )}
