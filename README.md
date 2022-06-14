@@ -1,4 +1,59 @@
 # 김서연
+## [6월 14일]
+### 1. 프로필 기능 보완
+- 프로필 업데이트 기능 추가
+- 일반 회원가입으로 로그인해서 userObj 출력
+- displayName 항목이 null이라고 되어있고, 네비게이션 화면에도 '의 Profile'로 되어있음
+
+#### 1) 프로필 업데이트
+- onChange함수를 이용해 setNewDisplayName에 input 엘리먼트의 입력값 전달
+- onSubmit함수 작성 -> 실제로 프로필 업데이트 기능이 완성되지 않음
+```java
+  const onChange = (event) => {
+    const {
+      target: {value},
+    } = event;
+    setNewDisplayName(value); 
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  ...
+
+  <form onSubmit={onSubmit}>
+    <input type="text" placeholder="Display name" onChange={onChange} value={newDisplayName} />
+  </form>
+```
+
+### 2. 프로필 실시간 업데이트
+- 컴포넌트 리렌더링하는 방법으로 구현 가능
+- 1) useState로 관리 중인 상태가 업데이트 되는 경우
+- 2) props로 받은 요소가 업데이트 되는 경우
+
+#### 1) refreshUser 함수 추가
+- userObj는 스스로 업데이트 된 프로필 반영을 못함
+- 새 프로필을 파이어베이스에서 받아 userObj에 반영
+- userObj를 새로고침하는 함수
+```java
+  const refreshUser = () => {
+    setUserObj(authService.currentUser);
+  };
+```
+
+#### 2) 용량 줄이기
+- 리액트는 상태나 props의 내용물이 너무 많으면 작은 변화를 제대로 인식하지 못함
+- displayName을 리액트에서 인식하지 못함
+- isLoggedIn 크기 줄이기 -> Boolean함수를 사용해서 userObj 여부 확인
+```java
+  <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
+```
+
+
+
+
+
 
 ## [6월 8일]
 ### 1. 사진 저장 기능
