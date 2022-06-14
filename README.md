@@ -50,9 +50,22 @@
   <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj} />
 ```
 
+### 3. 코드 리팩토링
+- 코드 깔끔하게 정리하기
+- 컴포넌트로 나누면 재활용 가능
 
+#### 1) Home 컴포넌트 나누기
+- form 엘리먼트를 'NweetFactory.js' 컴포넌트로 나누기
+- Home에서 <NweetsFactory> 컴포넌트 작성 및 엘리먼트 전달
+- Home에서 불투명 처리된 함수 NweetsFatory 컴포넌트로 옮기기
 
-
+### 4. 로그아웃 버그 고치기
+- 새로고침을 해야 완벽한 로그아웃이 되는 버그가 생김
+- 로그인/로그아웃 서비스는 authService에서 user의 상태로 userObj를 업데이트하는 방식임
+```java
+  setUserObj(false);
+```
+- isLoggdeIn 프롭스는 Boolean(userObj)에 의해 정해지므로 isLoggdeIn은 상태관리를 하지 않아도 됨
 
 
 ## [6월 8일]
